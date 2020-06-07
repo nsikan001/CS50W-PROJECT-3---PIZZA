@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!--  <a class="navbar-brand" href="#">Beton cooks</a>-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <h1><a class="nav-link" href="{% url 'admin_area' %}">Pinnochio’s Pizza & Subs  <span class="sr-only">(current)</span></a>
+                </h1>
+            </li>
+
+        </ul>
+        <div class="row">
+            <div class="col"><h6>Hello, {{ user.username }}</h6></div>
+            <div class="col"><a href="{% url 'manage_orders' %}"><span class="glyphicon glyphicon-shopping-cart"></span>Manage
+                orders</a></div>
+            <div class="col"><h6><a href="{% url 'logout' %}">Logout</a></h6></div>
+
+        </div>
+
+    </div>
+</nav>
+<h2>Manage orders</h2>
+<div class="row">
+    <div class="col-md-10">
+        <table class="table">
+
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Customer name</th>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for customer_order in customer_orders %}
+            <tr>
+                <td>{{ customer_order.user }}</td>
+                <td>{{ customer_order.prod_name }}</td>
+                <td>{{ customer_order.prod_price }}</td>
+                <td>{{ customer_order.is_ordered }}</td>
+                <td><a href="{% url 'approve_order' customer_order.id %}" class="btn btn-secondary btn-xs">Approve</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+            <tfoot class="thead-dark">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            </tfoot>
+
+        </table>
+
+        {% endblock %}
